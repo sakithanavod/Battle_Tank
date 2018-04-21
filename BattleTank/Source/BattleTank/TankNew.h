@@ -32,13 +32,29 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Tank)
 	void SetBarrelChildActor(UChildActorComponent *BarrelFromBP);
+	
+	UFUNCTION(BlueprintCallable, Category = Tank)
+	void SetTankChildActor(UChildActorComponent * TankFromBP);
+
+	
 
 private:
 	//rotate turret at speed of
 	void RotateTurret(float Speed);
 	void RotateBarrel(float Speed);
 
-	//A referance from blueprint
+	//Tank Move methods
+	void MoveTank(float Speed);
+	void RotateTank(float Speed);
+
+	//A referances from blueprint
 	UChildActorComponent*Turret=nullptr;
 	UChildActorComponent*Barrel = nullptr;
+	UChildActorComponent*Tank = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	float RotationSpeed = 60.0f;
+
+	UPROPERTY(EditAnywhere)
+	float MovementSpeed = 60.0f;
 };
