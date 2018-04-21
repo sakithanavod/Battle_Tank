@@ -35,7 +35,7 @@ void ATankNew::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("Rotate_Tank", this, &ATankNew::RotateTank);
 }
 
-void ATankNew::MoveTank(float Speed) 
+void ATankNew::MoveTank(float Speed)
 {
 	if (!Tank) { return; }
 	float Distance = GetWorld()->DeltaTimeSeconds*Speed*MovementSpeed; //Using deltatime for make framerate independent
