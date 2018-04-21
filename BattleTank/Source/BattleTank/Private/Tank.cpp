@@ -21,6 +21,7 @@ void ATank::BeginPlay()
 // Called every frame
 void ATank::Tick(float DeltaTime)
 {
+
 	Super::Tick(DeltaTime);
 
 }
@@ -32,3 +33,9 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void ATank::AimAt(FVector HitLocation) 
+{
+	auto OurTankName = GetName();
+	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"),*OurTankName, *(HitLocation.ToString()))
+
+}
