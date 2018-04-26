@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimComponet.h"
+#include "TankBarrel.h"
+#include "TankTurret.h"
 
 
 // Sets default values for this component's properties
@@ -22,15 +24,17 @@ void UTankAimComponet::AimAt(FVector HitLocation, float LaunchSpeed)
 
 	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(
 		this, OutLaunchVelocity,
-		StartLocation, HitLocation, LaunchSpeed, ESuggestProjVelocityTraceOption::DoNotTrace);
+		StartLocation, HitLocation, LaunchSpeed,false,0,0, ESuggestProjVelocityTraceOption::DoNotTrace);
 	
 	if (bHaveAimSolution) {//calculation sucess
 
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		auto TankNames = GetOwner()->GetName();
 		MoveBarrel(AimDirection);
+
+		auto Time = GetWorld()->GetTimeSeconds();
+		//UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), Time);
 	}
-	//else nothing
 }
 
 void UTankAimComponet::MoveBarrel(FVector Direction)
@@ -40,13 +44,22 @@ void UTankAimComponet::MoveBarrel(FVector Direction)
 	FRotator AimAsRotation = Direction.Rotation();
 	FRotator DeltaRotation = AimAsRotation - BarrelRotator;
 
-	UE_LOG(LogTemp, Warning, TEXT("Aim Direction %s"), *DeltaRotation.ToString());
-	// according those rotators change posion of the barrel
+	if (!Barrel) { return; }
+	Barrel->Elevate(DeltaRotation.Pitch);
+
+	if (!Turret) { return; }
+	Turret->Rotate(DeltaRotation.Yaw);
 	
 }
 
-void UTankAimComponet::SetBarrelRefereance(UStaticMeshComponent * BarrelToSet)
+
+void UTankAimComponet::SetBarrelRefereance(UTankBarrel * BarrelToSet)
 {
 	Barrel = BarrelToSet; 
+}
+
+void UTankAimComponet::SetTurretRefereance(UTankTurret *TurretToSet)
+{
+	Turret = TurretToSet;
 }
 
