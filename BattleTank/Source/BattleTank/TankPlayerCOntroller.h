@@ -30,10 +30,10 @@ private:
 	bool GetVectorLookHitLocation(FVector WorldDirection, FVector& HitLocation) const;
 	//Change Barrel posision to crosshair
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5f;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrosshairYLocation = 0.3333333f;
 
 	float LineTraceRange = 100000.0f;
