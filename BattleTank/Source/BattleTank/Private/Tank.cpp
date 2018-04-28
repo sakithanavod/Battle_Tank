@@ -4,6 +4,7 @@
 #include "TankAimComponet.h"
 #include "TankTurret.h"
 #include "TankBarrel.h"
+#include "TankMovementComponent.h"
 #include "Projectile.h"
 
 // Sets default values
@@ -34,6 +35,9 @@ void ATank::Fire()
 		auto ProjectileLocation = Barrel->GetSocketLocation(FName("Projectile"));
 		auto ProjectileRotation = Barrel->GetSocketRotation(FName("Projectile"));
 
+		if (!ProjectileBlueprint) { 
+			UE_LOG(LogTemp, Error, TEXT("Set Projectile BP in Tnak BP"))
+			return; }
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, ProjectileLocation, ProjectileRotation);
 		
 		Projectile->LaunchProjectile(LaunchSpeed);

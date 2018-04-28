@@ -22,4 +22,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float TrackMaxDrivingForce = 400000;
 	
-};
+	
+
+ };
