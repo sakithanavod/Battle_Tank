@@ -16,7 +16,7 @@ UTankAimComponet::UTankAimComponet()
 }
 
 
-void UTankAimComponet::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimComponet::AimAt(FVector HitLocation)
 {
 	if (!ensure(Barrel)) { return; }
 	FVector OutLaunchVelocity;

@@ -4,11 +4,11 @@
 
 
 #include "CoreMinimal.h"
+#include "Engine.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
 class UTankBarrel; //forward declaration
-class UTankAimComponet;
 class UTankTurret;
 class AProjectile;
 
@@ -19,8 +19,6 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
-	void AimAt(FVector HitLocation);
-
 
 	UFUNCTION(BlueprintCallable, Category = Projectile)  
 	void Fire();
@@ -35,8 +33,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimComponet* TankAimingComponent = nullptr;
 	
 
 private:	
