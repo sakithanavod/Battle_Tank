@@ -2,20 +2,20 @@
 
 #include "TankPlayerCOntroller.h"
 #include "Tank.h"
+#include "TankAimComponet.h"
+
 
 void ATankPlayerCOntroller::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	auto PossedPawn = GetControlledTank();
 
-	if (!PossedPawn) 
-	{ 
-		UE_LOG(LogTemp, Error, TEXT("Player Controller Not Possing Pawn")) 
+	auto AimComponent = GetControlledTank()->FindComponentByClass<UTankAimComponet>();
+	if (AimComponent) {
+		FoundAimComponent(AimComponent);
 	}
-	else
+	else 
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Possed Tank Name %s"), *(PossedPawn->GetName()))
+		UE_LOG(LogTemp, Error, TEXT("Aiming Compoenent not found"))
 	}
 }
 
@@ -34,7 +34,7 @@ ATank * ATankPlayerCOntroller::GetControlledTank() const
 
 void ATankPlayerCOntroller::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()) { return; }
+	if (!ensure(GetControlledTank())) { return; }
 	FVector HitLocation; //out paramiter
 	if (GetSightRayHitLocation(HitLocation)) 
 	{
