@@ -3,6 +3,7 @@
 #include "TankAimComponet.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 
 
 // Sets default values for this component's properties
@@ -57,4 +58,24 @@ void UTankAimComponet::SetAimComponents(UTankBarrel * BarrelToSet, UTankTurret *
 {
 	Barrel = BarrelToSet; 
 	Turret = TurretToSet;
+}
+
+void UTankAimComponet::Fire()
+{
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	if (Barrel&&isReloaded)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Tank is firing"))
+		auto ProjectileLocation = Barrel->GetSocketLocation(FName("Projectile"));
+		auto ProjectileRotation = Barrel->GetSocketRotation(FName("Projectile"));
+
+		if (!ensure(ProjectileBlueprint)) {
+			UE_LOG(LogTemp, Error, TEXT("Set Projectile BP in Tnak BP"))
+				return;
+		}
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, ProjectileLocation, ProjectileRotation);
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+	}
 }

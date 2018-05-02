@@ -33,6 +33,6 @@ private:
 	UTankTrack * SetLeftTrack = nullptr;
 	UTankTrack * SetRightTrack = nullptr;
 
-
+	// Called to bind functionality to input
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 };

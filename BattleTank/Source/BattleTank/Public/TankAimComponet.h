@@ -19,6 +19,7 @@ Locked
 //forward declaration
 class UTankBarrel; 
 class UTankTurret;
+class AProjectile;
 
 //hold barrel propertise
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -30,6 +31,15 @@ public:
 	// Sets default values for this component's properties
 	UTankAimComponet();
 	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = Projectile)
+	void Fire();
+
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	float ReloadTimeInSeconds = 3;
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	TSubclassOf<AProjectile>ProjectileBlueprint;
 
 	
 
@@ -48,5 +58,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 4000.0f;
+
+	double LastFireTime = 0;
 
 };

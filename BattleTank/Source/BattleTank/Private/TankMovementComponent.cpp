@@ -43,3 +43,4 @@ void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, boo
 	//UE_LOG(LogTemp, Warning, TEXT("%s has move velocity of: %s"), *TankName, *AIForwardIntension)
 }
 
+
